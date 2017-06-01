@@ -25,15 +25,28 @@ func handle(w http.ResponseWriter, request *http.Request) {
 		case "view":
 			fmt.Fprintf(w, "aa\n")
 		case "login":
-			fmt.Fprintf(w, "please log in: \n")
+			login(w, request, uri)
 		default:
-			w.WriteHeader(http.StatusNotFound)
-			fmt.Fprintf(w, "404\n")
+			notfound(w)
 		}
 	} else {
 		fmt.Fprintf(w, "Hello, welcome\n")
 	}
 	fmt.Fprintf(w, "<br>"+uri+"\n")
+}
+
+func login(w http.ResponseWriter, request *http.Request, uri string) {
+	if uri == "login" {
+		//location: /login
+		fmt.Fprintf(w, "please log in: \n")
+	} else {
+		notfound(w)
+	}
+}
+
+func notfound(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusNotFound)
+	fmt.Fprintf(w, "404\n")
 }
 
 func main() {
